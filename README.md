@@ -4,7 +4,8 @@
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white)
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=flat-square&logo=android&logoColor=white)
 ![iOS](https://img.shields.io/badge/iOS-000000?style=flat-square&logo=apple&logoColor=white)
-![GitHub Actions](https://img.shields.io/badge/CI-GitHub_Actions-2088FF?style=flat-square&logo=github-actions&logoColor=white)
+[![CI](https://github.com/damlapnar/appium-mobile-automation/actions/workflows/mobile-tests.yml/badge.svg)](https://github.com/damlapnar/appium-mobile-automation/actions/workflows/mobile-tests.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Cross-platform mobile automation framework supporting Android and iOS. Built with Appium, Java, and TestNG using Page Object Model with platform-specific locator support.
 
