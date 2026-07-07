@@ -14,10 +14,10 @@
         <maven.compiler.target>17</maven.compiler.target>
         <appium.version>9.2.2</appium.version>
         <testng.version>7.10.2</testng.version>
-        <selenium.version>4.21.0</selenium.version>
     </properties>
 
     <dependencies>
+        <!-- Appium Java client — brings selenium transitively at a compatible version -->
         <dependency>
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
@@ -27,11 +27,6 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>${testng.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium.version}</version>
         </dependency>
         <dependency>
             <groupId>com.aventstack</groupId>
