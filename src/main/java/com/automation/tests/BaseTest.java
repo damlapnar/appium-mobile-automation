@@ -7,16 +7,18 @@ import org.testng.annotations.Parameters;
 
 public class BaseTest {
 
+    protected static final String BASE_URL =
+        System.getProperty("baseUrl", "https://www.saucedemo.com");
+
     @BeforeMethod
     @Parameters({"platform"})
     public void setUp(String platform) throws Exception {
         if ("android".equalsIgnoreCase(platform)) {
             DriverManager.initAndroidDriver();
-        } else if ("ios".equalsIgnoreCase(platform)) {
-            DriverManager.initIOSDriver();
         } else {
-            throw new IllegalArgumentException("Platform must be 'android' or 'ios'");
+            throw new IllegalArgumentException("Unsupported platform: " + platform);
         }
+        DriverManager.getDriver().get(BASE_URL);
     }
 
     @AfterMethod
