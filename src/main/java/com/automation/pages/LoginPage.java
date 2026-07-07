@@ -1,37 +1,24 @@
 package com.automation.pages;
 
-import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.iOSXCUITFindBy;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.By;
 
 public class LoginPage extends BasePage {
 
-    @AndroidFindBy(accessibility = "username_field")
-    @iOSXCUITFindBy(accessibility = "username_field")
-    private WebElement usernameField;
-
-    @AndroidFindBy(accessibility = "password_field")
-    @iOSXCUITFindBy(accessibility = "password_field")
-    private WebElement passwordField;
-
-    @AndroidFindBy(accessibility = "login_button")
-    @iOSXCUITFindBy(accessibility = "login_button")
-    private WebElement loginButton;
-
-    @AndroidFindBy(id = "com.example.app:id/error_message")
-    @iOSXCUITFindBy(accessibility = "error_message")
-    private WebElement errorMessage;
+    private static final By USERNAME  = By.cssSelector("[data-test='username']");
+    private static final By PASSWORD  = By.cssSelector("[data-test='password']");
+    private static final By BTN_LOGIN = By.cssSelector("[data-test='login-button']");
+    private static final By ERROR_MSG = By.cssSelector("[data-test='error']");
 
     public void enterUsername(String username) {
-        type(usernameField, username);
+        type(USERNAME, username);
     }
 
     public void enterPassword(String password) {
-        type(passwordField, password);
+        type(PASSWORD, password);
     }
 
     public void tapLogin() {
-        tap(loginButton);
+        tap(BTN_LOGIN);
     }
 
     public void login(String username, String password) {
@@ -41,10 +28,10 @@ public class LoginPage extends BasePage {
     }
 
     public String getErrorMessage() {
-        return getText(errorMessage);
+        return getText(ERROR_MSG);
     }
 
     public boolean isErrorDisplayed() {
-        return isDisplayed(errorMessage);
+        return isDisplayed(ERROR_MSG);
     }
 }
