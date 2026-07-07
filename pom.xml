@@ -17,11 +17,18 @@
     </properties>
 
     <dependencies>
-        <!-- Appium Java client — brings selenium transitively at a compatible version -->
         <dependency>
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
             <version>${appium.version}</version>
+        </dependency>
+        <!-- Pin selenium-api to 4.15.0 so ContextAware is available.
+             Appium 9.2.2 pulls selenium-remote-driver:4.21.0 which removed ContextAware
+             from selenium-api; nearest-definition (this pom) takes precedence. -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-api</artifactId>
+            <version>4.15.0</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
