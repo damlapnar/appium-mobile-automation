@@ -10,8 +10,14 @@
     <packaging>jar</packaging>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <!--
+          release (not source+target) so javac enforces the JDK 17 API
+          surface even when built with a newer JDK — source+target alone
+          let code compile against APIs added after 17 while still
+          claiming 17 compatibility, and warn about it instead of erroring.
+        -->
+        <maven.compiler.release>17</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <appium.version>9.2.2</appium.version>
         <testng.version>7.10.2</testng.version>
         <!--
