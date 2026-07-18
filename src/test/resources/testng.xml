@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <!--
-  Unit tests run unconditionally (no device/Appium needed). Android needs
-  a running Appium server + emulator/device — see README.md and
-  apps/README.md. There is no iOS test entry: the iOS page objects are
-  unverified locator guesses (see apps/README.md), not something to run
-  by default.
+  Unit tests run unconditionally (no device/Appium needed). Both Android
+  suites need a running Appium server + emulator/device: Native App Tests
+  also needs apps/android/mda.apk in place (apps/README.md); Mobile Web
+  Tests only needs Chrome, which every standard emulator image ships with.
+  There is no iOS test entry: the iOS page objects are unverified locator
+  guesses (see apps/README.md), not something to run by default.
 -->
 <suite name="Mobile Test Suite">
 
@@ -19,6 +20,13 @@
         <parameter name="platform" value="android"/>
         <classes>
             <class name="com.automation.app.tests.LoginTest"/>
+        </classes>
+    </test>
+
+    <test name="Mobile Web Tests">
+        <parameter name="platform" value="android"/>
+        <classes>
+            <class name="com.automation.web.tests.LoginTest"/>
         </classes>
     </test>
 
