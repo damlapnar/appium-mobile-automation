@@ -14,10 +14,49 @@
         <maven.compiler.target>17</maven.compiler.target>
         <appium.version>9.2.2</appium.version>
         <testng.version>7.10.2</testng.version>
+        <!--
+          java-client:9.2.2 declares its own Selenium dependencies as the
+          open range [4.19.0, 5.0) rather than a pinned version, so Maven
+          resolves it to whatever the newest matching Selenium release is
+          AT BUILD TIME. That used to be fine; by the time this was built,
+          it resolved to 4.46.0, which had removed org.openqa.selenium
+          .ContextAware / html5.LocationContext — classes java-client 9.2.2
+          still references — and the project failed to compile with no
+          change to this file at all. Pinned to 4.21.0 (confirmed present
+          in that jar) via dependencyManagement below to stop the range
+          from floating forward on every fresh `mvn` run.
+        -->
         <selenium.version>4.21.0</selenium.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-api</artifactId>
+                <version>${selenium.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-remote-driver</artifactId>
+                <version>${selenium.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-support</artifactId>
+                <version>${selenium.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
+        <!--
+          Deliberately no selenium-java dependency here: it aggregates the
+          desktop browser driver jars (chrome/firefox/edge/etc.), none of
+          which this codebase uses — java-client's own selenium-api/
+          selenium-remote-driver/selenium-support (pinned above) are
+          everything AndroidDriver/IOSDriver need.
+        -->
         <dependency>
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
@@ -27,16 +66,6 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>${testng.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.aventstack</groupId>
-            <artifactId>extentreports</artifactId>
-            <version>5.1.1</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
