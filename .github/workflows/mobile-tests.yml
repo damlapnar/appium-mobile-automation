@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main]
 
+concurrency:
+  group: mobile-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   # Checkstyle + the swipe-math unit tests need no emulator/Appium server,
   # so they run in their own fast job rather than sharing the expensive
@@ -31,7 +35,9 @@ jobs:
         run: mvn test -Dtest=SwipeHelperTest -DfailIfNoTests=false
 
   android-tests:
+    name: Android Tests (native app + mobile web)
     runs-on: ubuntu-latest
+    timeout-minutes: 45
 
     steps:
       - uses: actions/checkout@v4
@@ -49,8 +55,11 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
-      # See apps/README.md — this suite is written against Sauce Labs' own
-      # open-source demo app, verified against its real source.
+      # See apps/README.md — the native-app suite (com.automation.app) is
+      # written against Sauce Labs' own open-source demo app, verified
+      # against its real source. The mobile-web suite (com.automation.web)
+      # needs no app install — it drives saucedemo.com through Chrome,
+      # which every google_apis emulator image ships with.
       - name: Download test app (Sauce Labs' My Demo App)
         run: |
           mkdir -p apps/android
@@ -67,6 +76,7 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: Nexus 6
+          disable-animations: true
           script: |
             npm install -g appium
             appium driver install uiautomator2

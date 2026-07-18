@@ -10,22 +10,26 @@ cd appium-mobile-automation
 mvn compile
 ```
 
-`mvn compile` alone doesn't need Appium, an emulator, or the app — it's the
+`mvn compile` alone doesn't need Appium, an emulator, or any app — it's the
 fastest way to confirm your toolchain is set up correctly.
 
-## The Target App
+## Two Suites, Two Targets
 
-This suite is written against Sauce Labs' real, open-source "My Demo App,"
-not a fictional one — see [apps/README.md](apps/README.md) for where to get
-it, the real test accounts, and (importantly) the iOS gap: that app's
-Storyboards and view controllers set no accessibility identifiers anywhere,
-so `LoginPage` has no verified iOS locators yet.
+- `com.automation.app` — Sauce Labs' real, open-source "My Demo App," not a
+  fictional one. See [apps/README.md](apps/README.md) for where to get it,
+  the real test accounts, and (importantly) the iOS gap: that app's
+  Storyboards and view controllers set no accessibility identifiers
+  anywhere, so `LoginPage` has no verified iOS locators yet.
+- `com.automation.web` — saucedemo.com through Chrome on an Android
+  emulator, no app install needed. Same site, same selectors, same
+  expected behavior as the sibling `playwright-web-automation` project's
+  `login.spec.ts`.
 
-When adding a new page object or test, verify it against the app's actual
-public source (layout XML / `Fragment.java` for Android) rather than
-guessing at locators — that's how the current page objects were built, and
-how the original fictional ones (which pointed at a `com.example.app` that
-never existed) got replaced.
+When adding a new page object or test to `com.automation.app`, verify it
+against the app's actual public source (layout XML / `Fragment.java` for
+Android) rather than guessing at locators — that's how its page objects
+were built, and how the original fictional ones (which pointed at a
+`com.example.app` that never existed) got replaced.
 
 ## Running Tests
 
@@ -33,8 +37,10 @@ never existed) got replaced.
 # Unit tests — no emulator or Appium server needed
 mvn test -Dtest=SwipeHelperTest
 
-# Android — needs Appium running, an emulator/device, and
-# apps/android/mda.apk in place (see apps/README.md)
+# Both Android suites — needs Appium running and an emulator/device;
+# com.automation.app also needs apps/android/mda.apk in place (see
+# apps/README.md). Don't add -Dtest=LoginTest here: it silently drops
+# testng.xml's platform parameter and matches nothing (see README.md).
 mvn test -Dplatform=android -DdeviceName=emulator-5554
 ```
 
@@ -52,7 +58,7 @@ or `sun_checks.xml`.
 
 ## Guidelines
 
-- Verify new page objects against the real app's source, not assumptions
+- Verify new page objects against the real target's source, not assumptions
 - Add tests for any new functionality
 - Keep commits small and focused with descriptive messages
 - Open an issue before submitting large changes
