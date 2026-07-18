@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Mobile Test Suite" parallel="tests" thread-count="2">
+<!--
+  Android only by default — see apps/README.md for why, and
+  testng-ios.xml (opt-in, run via -DsuiteXmlFile) for the iOS suite,
+  whose page objects are unverified locator guesses.
+-->
+<suite name="Mobile Test Suite (Android)">
 
     <test name="Android Tests">
         <parameter name="platform" value="android"/>
-        <classes>
-            <class name="com.automation.tests.LoginTest"/>
-        </classes>
-    </test>
-
-    <test name="iOS Tests">
-        <parameter name="platform" value="ios"/>
         <classes>
             <class name="com.automation.tests.LoginTest"/>
         </classes>

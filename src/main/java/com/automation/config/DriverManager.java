@@ -35,7 +35,9 @@ public class DriverManager {
         caps.setCapability("appium:deviceName", System.getProperty("deviceName", "emulator-5554"));
         caps.setCapability("appium:platformVersion", System.getProperty("platformVersion", "14.0"));
         caps.setCapability("appium:automationName", "UiAutomator2");
-        caps.setCapability("appium:app", System.getProperty("appPath", "apps/android/app-debug.apk"));
+        // Default target: Sauce Labs' open-source "My Demo App" — see apps/README.md
+        // for exactly where to download it and why this suite is built against it.
+        caps.setCapability("appium:app", System.getProperty("appPath", "apps/android/mda.apk"));
         caps.setCapability("appium:noReset", false);
 
         AndroidDriver driver = new AndroidDriver(appiumServerUrl(), caps);
@@ -44,12 +46,17 @@ public class DriverManager {
     }
 
     public static void initIOSDriver() throws MalformedURLException {
+        // The iOS build of the same app exists (see apps/README.md) but its
+        // page objects are NOT verified the way the Android ones are: its
+        // storyboards and view controllers set no accessibilityIdentifier
+        // anywhere, so LoginPage's @iOSXCUITFindBy locators are unconfirmed
+        // guesses, not something read out of the app's real source.
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("platformName", "iOS");
         caps.setCapability("appium:deviceName", System.getProperty("deviceName", "iPhone 15"));
         caps.setCapability("appium:platformVersion", System.getProperty("platformVersion", "17.0"));
         caps.setCapability("appium:automationName", "XCUITest");
-        caps.setCapability("appium:app", System.getProperty("appPath", "apps/ios/app.app"));
+        caps.setCapability("appium:app", System.getProperty("appPath", "apps/ios/mda.app"));
         caps.setCapability("appium:noReset", false);
 
         IOSDriver driver = new IOSDriver(appiumServerUrl(), caps);

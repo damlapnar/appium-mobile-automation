@@ -26,6 +26,17 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
+      # See apps/README.md — this suite is written against Sauce Labs' own
+      # open-source demo app, verified against its real source.
+      - name: Download test app (Sauce Labs' My Demo App)
+        run: |
+          mkdir -p apps/android
+          curl -sL "$(curl -s https://api.github.com/repos/saucelabs/my-demo-app-android/releases/latest \
+            | grep browser_download_url \
+            | grep -v androidTest \
+            | grep '\.apk"' \
+            | cut -d '"' -f 4)" -o apps/android/mda.apk
+
       - name: Start Android Emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -37,6 +48,7 @@ jobs:
             npm install -g appium
             appium driver install uiautomator2
             appium &
+            npx --yes wait-on tcp:127.0.0.1:4723 --timeout 60000
             mvn test -Dplatform=android
 
       - name: Upload test results

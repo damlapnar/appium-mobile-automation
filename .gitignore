@@ -2,6 +2,10 @@ target/
 *.class
 .idea/
 *.iml
-apps/*.apk
-apps/*.app
-apps/*.ipa
+# apps/*.apk etc only matched files directly in apps/, not apps/android/
+# or apps/ios/ subdirectories where they actually get placed — ** matches
+# across directory levels, plain * doesn't.
+apps/**/*.apk
+apps/**/*.app
+apps/**/*.ipa
+apps/**/*.zip
