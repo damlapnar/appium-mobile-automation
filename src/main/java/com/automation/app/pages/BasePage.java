@@ -1,6 +1,6 @@
-package com.automation.pages;
+package com.automation.app.pages;
 
-import com.automation.config.DriverManager;
+import com.automation.app.config.DriverManager;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;

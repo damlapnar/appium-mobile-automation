@@ -1,4 +1,4 @@
-package com.automation.data;
+package com.automation.app.data;
 
 /**
  * Accounts built into Sauce Labs' "My Demo App" (the app this suite targets —

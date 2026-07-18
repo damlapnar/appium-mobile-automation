@@ -1,4 +1,4 @@
-package com.automation.config;
+package com.automation.app.config;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;

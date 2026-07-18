@@ -1,9 +1,9 @@
-package com.automation.tests;
+package com.automation.app.tests;
 
-import com.automation.data.TestUsers;
-import com.automation.pages.LoginPage;
-import com.automation.pages.NavigationPage;
-import com.automation.pages.ProductCatalogPage;
+import com.automation.app.data.TestUsers;
+import com.automation.app.pages.LoginPage;
+import com.automation.app.pages.NavigationPage;
+import com.automation.app.pages.ProductCatalogPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

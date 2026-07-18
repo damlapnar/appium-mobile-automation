@@ -15,10 +15,10 @@
         </classes>
     </test>
 
-    <test name="Android Tests">
+    <test name="Native App Tests">
         <parameter name="platform" value="android"/>
         <classes>
-            <class name="com.automation.tests.LoginTest"/>
+            <class name="com.automation.app.tests.LoginTest"/>
         </classes>
     </test>
 
