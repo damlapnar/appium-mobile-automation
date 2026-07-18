@@ -4,6 +4,8 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -12,6 +14,7 @@ import java.time.Duration;
 
 public class DriverManager {
 
+    private static final Logger log = LoggerFactory.getLogger(DriverManager.class);
     private static final ThreadLocal<AppiumDriver> driverThread = new ThreadLocal<>();
 
     public static AppiumDriver getDriver() {
@@ -40,9 +43,16 @@ public class DriverManager {
         caps.setCapability("appium:app", System.getProperty("appPath", "apps/android/mda.apk"));
         caps.setCapability("appium:noReset", false);
 
+        log.info(
+            "Starting Android session: deviceName={}, platformVersion={}, app={}",
+            caps.getCapability("appium:deviceName"),
+            caps.getCapability("appium:platformVersion"),
+            caps.getCapability("appium:app")
+        );
         AndroidDriver driver = new AndroidDriver(appiumServerUrl(), caps);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driverThread.set(driver);
+        log.info("Android session started: {}", driver.getSessionId());
     }
 
     public static void initIOSDriver() throws MalformedURLException {
@@ -59,14 +69,23 @@ public class DriverManager {
         caps.setCapability("appium:app", System.getProperty("appPath", "apps/ios/mda.app"));
         caps.setCapability("appium:noReset", false);
 
+        log.info(
+            "Starting iOS session: deviceName={}, platformVersion={}, app={}",
+            caps.getCapability("appium:deviceName"),
+            caps.getCapability("appium:platformVersion"),
+            caps.getCapability("appium:app")
+        );
         IOSDriver driver = new IOSDriver(appiumServerUrl(), caps);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driverThread.set(driver);
+        log.info("iOS session started: {}", driver.getSessionId());
     }
 
     public static void quitDriver() {
-        if (driverThread.get() != null) {
-            driverThread.get().quit();
+        AppiumDriver driver = driverThread.get();
+        if (driver != null) {
+            log.info("Quitting session: {}", driver.getSessionId());
+            driver.quit();
             driverThread.remove();
         }
     }

@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <!--
-  Android only by default — see apps/README.md for why, and
-  testng-ios.xml (opt-in, run via -DsuiteXmlFile) for the iOS suite,
-  whose page objects are unverified locator guesses.
+  Unit tests run unconditionally (no device/Appium needed). Android needs
+  a running Appium server + emulator/device — see README.md and
+  apps/README.md. There is no iOS test entry: the iOS page objects are
+  unverified locator guesses (see apps/README.md), not something to run
+  by default.
 -->
-<suite name="Mobile Test Suite (Android)">
+<suite name="Mobile Test Suite">
+
+    <test name="Unit Tests">
+        <classes>
+            <class name="com.automation.utils.SwipeHelperTest"/>
+        </classes>
+    </test>
 
     <test name="Android Tests">
         <parameter name="platform" value="android"/>

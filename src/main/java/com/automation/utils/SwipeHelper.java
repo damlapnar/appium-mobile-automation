@@ -11,33 +11,41 @@ import java.util.List;
 
 public class SwipeHelper {
 
-    public static void swipeUp() {
-        AppiumDriver driver = DriverManager.getDriver();
-        Dimension size = driver.manage().window().getSize();
-        int startY = (int) (size.height * 0.8);
-        int endY = (int) (size.height * 0.2);
-        int centerX = size.width / 2;
+    /** start/end coordinates for a swipe, kept separate from any live driver so the math is unit-testable. */
+    record SwipeCoordinates(int startX, int startY, int endX, int endY) {
+    }
 
-        swipe(centerX, startY, centerX, endY);
+    static SwipeCoordinates upCoordinates(int width, int height) {
+        int startY = (int) (height * 0.8);
+        int endY = (int) (height * 0.2);
+        int centerX = width / 2;
+        return new SwipeCoordinates(centerX, startY, centerX, endY);
+    }
+
+    static SwipeCoordinates downCoordinates(int width, int height) {
+        int startY = (int) (height * 0.2);
+        int endY = (int) (height * 0.8);
+        int centerX = width / 2;
+        return new SwipeCoordinates(centerX, startY, centerX, endY);
+    }
+
+    public static void swipeUp() {
+        Dimension size = DriverManager.getDriver().manage().window().getSize();
+        perform(upCoordinates(size.width, size.height));
     }
 
     public static void swipeDown() {
-        AppiumDriver driver = DriverManager.getDriver();
-        Dimension size = driver.manage().window().getSize();
-        int startY = (int) (size.height * 0.2);
-        int endY = (int) (size.height * 0.8);
-        int centerX = size.width / 2;
-
-        swipe(centerX, startY, centerX, endY);
+        Dimension size = DriverManager.getDriver().manage().window().getSize();
+        perform(downCoordinates(size.width, size.height));
     }
 
-    private static void swipe(int startX, int startY, int endX, int endY) {
+    private static void perform(SwipeCoordinates c) {
         AppiumDriver driver = DriverManager.getDriver();
         PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
         Sequence swipe = new Sequence(finger, 1)
-            .addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), startX, startY))
+            .addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), c.startX(), c.startY()))
             .addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()))
-            .addAction(finger.createPointerMove(Duration.ofMillis(600), PointerInput.Origin.viewport(), endX, endY))
+            .addAction(finger.createPointerMove(Duration.ofMillis(600), PointerInput.Origin.viewport(), c.endX(), c.endY()))
             .addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
 
         driver.perform(List.of(swipe));
