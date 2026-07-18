@@ -28,6 +28,23 @@ public class LoginTest extends BaseTest {
         Assert.assertTrue(navigationPage.isLogoutMenuItemDisplayed(), "Menu should now offer Logout instead of Login");
     }
 
+    @Test(description = "Logout should return the app to a logged-out state")
+    public void testLogout() {
+        NavigationPage navigationPage = new NavigationPage();
+        navigationPage.goToLogin();
+
+        LoginPage loginPage = new LoginPage();
+        loginPage.login(TestUsers.STANDARD_USERNAME, TestUsers.PASSWORD);
+
+        Assert.assertTrue(navigationPage.isLogoutMenuItemDisplayed(), "Should be logged in before attempting logout");
+
+        navigationPage.logout();
+
+        ProductCatalogPage productCatalogPage = new ProductCatalogPage();
+        Assert.assertTrue(productCatalogPage.isDisplayed(), "Should land back on the product catalog after logout");
+        Assert.assertTrue(navigationPage.isLoginMenuItemDisplayed(), "Menu should offer Login again after logout");
+    }
+
     @Test(description = "Locked-out account should be rejected with a locked-out message")
     public void testLockedOutUser() {
         NavigationPage navigationPage = new NavigationPage();

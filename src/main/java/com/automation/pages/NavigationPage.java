@@ -19,6 +19,13 @@ public class NavigationPage extends BasePage {
     @AndroidFindBy(accessibility = "Logout Menu Item")
     private WebElement logoutMenuItem;
 
+    // Logout shows a native AlertDialog ("Are you sure you want to logout")
+    // before actually logging out — confirmed in MainActivity.java's
+    // showLogoutAlertDialog(). android:id/button1 is the Android framework's
+    // own resource id for an AlertDialog's positive button, not an app id.
+    @AndroidFindBy(id = "android:id/button1")
+    private WebElement logoutConfirmButton;
+
     public void openMenu() {
         tap(menuButton);
     }
@@ -28,9 +35,10 @@ public class NavigationPage extends BasePage {
         tap(loginMenuItem);
     }
 
-    public void goToLogout() {
+    public void logout() {
         openMenu();
         tap(logoutMenuItem);
+        tap(logoutConfirmButton);
     }
 
     public boolean isLoginMenuItemDisplayed() {
