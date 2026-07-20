@@ -32,7 +32,7 @@
           in that jar) via dependencyManagement below to stop the range
           from floating forward on every fresh `mvn` run.
         -->
-        <selenium.version>4.21.0</selenium.version>
+        <selenium.version>4.46.0</selenium.version>
     </properties>
 
     <dependencyManagement>
