@@ -18,7 +18,7 @@
         -->
         <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <appium.version>9.2.2</appium.version>
+        <appium.version>10.1.1</appium.version>
         <testng.version>7.10.2</testng.version>
         <!--
           java-client:9.2.2 declares its own Selenium dependencies as the
