@@ -19,7 +19,7 @@
         <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <appium.version>9.2.2</appium.version>
-        <testng.version>7.10.2</testng.version>
+        <testng.version>7.12.0</testng.version>
         <!--
           java-client:9.2.2 declares its own Selenium dependencies as the
           open range [4.19.0, 5.0) rather than a pinned version, so Maven
