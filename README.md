@@ -20,6 +20,22 @@ verified target rather than a fictional one:
   browser, here through Appium's mobile-web bridge instead. Needs no app
   install.
 
+## Why Appium?
+
+Appium extends the same WebDriver protocol Selenium uses to native and
+hybrid mobile apps, so a tester who already thinks in terms of
+`driver.findElement()` and Page Objects doesn't need a second mental model
+for mobile — just a different driver behind the same interface. That's also
+why one framework can hold both suites here: `com.automation.app` and
+`com.automation.web` share `SwipeHelper` and the same Page Object pattern
+despite driving a native app and a browser respectively.
+
+The cross-platform promise is real but only half-delivered so far —
+`DriverManager.initIOSDriver()` exists and Sauce Labs publishes an iOS build
+of the same demo app, but as [apps/README.md](apps/README.md) documents,
+nobody has sat down with Xcode's Accessibility Inspector to write real iOS
+locators yet. The architecture supports a third suite; it isn't written.
+
 ## Features
 
 - **Two coexisting suites** — native-app and mobile-web, sharing only the

@@ -5,6 +5,10 @@ on:
     branches: [main, develop]
   pull_request:
     branches: [main]
+  schedule:
+    # Catches drift with no code change to trigger it: a Sauce Labs demo-app
+    # release renaming its APK asset, saucedemo.com markup shifting, etc.
+    - cron: '0 6 * * 1'
 
 concurrency:
   group: mobile-${{ github.ref }}
